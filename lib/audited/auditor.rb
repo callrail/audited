@@ -191,12 +191,10 @@ module Audited
 
       def audits_to(version = nil)
         if version == :previous
-          version = if self.version
-                      self.version - 1
-                    else
-                      previous = audits.descending.offset(1).first
-                      previous ? previous.version : 1
-                    end
+          version = self.audits.count - 1
+        end
+        if version <= 0
+          version = 1
         end
         audits.to_version(version)
       end
