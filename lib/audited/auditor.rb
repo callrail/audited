@@ -51,7 +51,7 @@ module Audited
 
         attr_accessor :audit_comment
 
-        has_many :audits, -> { order(version: :asc) }, as: :auditable, class_name: Audited.audit_class.name
+        has_many :audits, -> { order(id: :asc) }, as: :auditable, class_name: Audit.name
         Audited.audit_class.audited_class_names << to_s
 
         on = Array(options[:on])
