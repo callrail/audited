@@ -56,6 +56,15 @@ module Audited
       self.class.ascending.auditable_finder(auditable_id, auditable_type).where("id <= ?", id)
     end
 
+    # Use this setter and getter for audited_changes since it doubles the serialization speed
+    def audited_changes
+      YAML.load(read_attribute(:audited_changes))
+    end
+
+    def audited_changes=(value)
+      write_attribute(:audited_changes, value.to_yaml)
+    end
+
     # Return an instance of what the object looked like at this revision. If
     # the object has been destroyed, this will be a new record.
     def revision
