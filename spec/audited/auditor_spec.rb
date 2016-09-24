@@ -593,7 +593,7 @@ describe Audited::Auditor do
         Models::ActiveRecord::Company.auditing_enabled = false
         company.update_attributes name: 'STI auditors'
         Models::ActiveRecord::Company.auditing_enabled = true
-      }.to_not change( Audited.audit_class, :count )
+      }.to_not change( Audited::Audit, :count )
     end
   end
 end
