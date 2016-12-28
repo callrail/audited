@@ -22,6 +22,7 @@ module Audited
 
   @current_user_method = :current_user
   @auditing_enabled = true
+  @current_agency_method = :current_agency
 end
 
 require 'audited/auditor'
