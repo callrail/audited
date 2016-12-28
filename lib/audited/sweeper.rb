@@ -25,6 +25,10 @@ module Audited
       controller.try(:request).try(:remote_ip)
     end
 
+    def current_agency
+      controller.send(Audited.current_agency_method) if controller.respond_to?(Audited.current_agency_method, true)
+    end
+
     def request_uuid
       controller.try(:request).try(:uuid)
     end
