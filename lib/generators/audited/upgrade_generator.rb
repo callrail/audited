@@ -51,6 +51,10 @@ module Audited
         if columns.include?('association_id')
           yield :rename_association_to_associated
         end
+
+        unless columns.include?('agency_id')
+          yield :add_agency_id_to_audits
+        end
       end
     end
   end
