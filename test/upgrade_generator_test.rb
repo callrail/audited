@@ -79,25 +79,15 @@ class UpgradeGeneratorTest < Rails::Generators::TestCase
     end
   end
 
-  test "generate migration with correct AR migration parent" do
-    load_schema 1
-
-    run_generator %w(upgrade)
-
-    assert_migration "db/migrate/add_comment_to_audits.rb" do |content|
-      parent = Rails::VERSION::MAJOR == 4 ? 'ActiveRecord::Migration' : "ActiveRecord::Migration[#{ActiveRecord::Migration.current_version}]"
-      assert_includes(content, "class AddCommentToAudits < #{parent}\n")
-    end
-  end
-
-  test "should add 'agency_id' to audits table" do
+  test "should add 'agency_id' and 'agency_type' to audits table" do
     load_schema 7
 
     run_generator %w(upgrade)
 
-    assert_migration "db/migrate/add_agency_id_to_audits.rb" do |content|
+    assert_migration "db/migrate/add_agency_to_audits.rb" do |content|
       assert_match(/add_column :audits, :agency_id, :integer/, content)
-      assert_match(/add_index :audits, :agency_id/, content)
+      assert_match(/add_column :audits, :agency_type, :string/, content)
+      assert_match(/add_index :audits, \[:agency_id, :agency_type\], :name => 'agency_index'/, content)
     end
   end
 end

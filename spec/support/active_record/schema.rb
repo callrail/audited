@@ -42,6 +42,10 @@ ActiveRecord::Schema.define do
     t.column :favourite_device, :string
   end
 
+  create_table :agencies do |t|
+    t.column :name, :string
+  end
+
   create_table :companies do |t|
     t.column :name, :string
     t.column :owner_id, :integer
@@ -64,6 +68,8 @@ ActiveRecord::Schema.define do
     t.column :associated_type, :string
     t.column :user_id, :integer
     t.column :user_type, :string
+    t.column :agency_id, :integer
+    t.column :agency_type, :string
     t.column :username, :string
     t.column :action, :string
     t.column :audited_changes, :text
@@ -77,6 +83,7 @@ ActiveRecord::Schema.define do
   add_index :audits, [:auditable_id, :auditable_type], name: 'auditable_index'
   add_index :audits, [:associated_id, :associated_type], name: 'associated_index'
   add_index :audits, [:user_id, :user_type], name: 'user_index'
+  add_index :audits, [:agency_id, :agency_type], name: 'agency_index'
   add_index :audits, :request_uuid
   add_index :audits, :created_at
 end

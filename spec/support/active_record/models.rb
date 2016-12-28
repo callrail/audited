@@ -13,6 +13,14 @@ module Models
       end
     end
 
+    class Agency < ::ActiveRecord::Base
+      audited allow_mass_assignment: true
+
+      def name=(val)
+        write_attribute(:name, CGI.escapeHTML(val))
+      end
+    end
+
     class UserOnlyPassword < ::ActiveRecord::Base
       self.table_name = :users
       attribute :non_column_attr if Rails.version >= '5.1'
