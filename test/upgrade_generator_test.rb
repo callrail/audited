@@ -99,4 +99,15 @@ class UpgradeGeneratorTest < Rails::Generators::TestCase
       assert_includes(content, "class AddCommentToAudits < #{parent}\n")
     end
   end
+
+  test "should add 'agency_id' to audits table" do
+    load_schema 7
+
+    run_generator %w(upgrade)
+
+    assert_migration "db/migrate/add_agency_id_to_audits.rb" do |content|
+      assert_match(/add_column :audits, :agency_id, :integer/, content)
+      assert_match(/add_index :audits, :agency_id/, content)
+    end
+  end
 end

@@ -62,6 +62,10 @@ module Audited
         if indexes.any? { |i| i.columns == %w[auditable_type auditable_id] }
           yield :add_version_to_auditable_index
         end
+
+        unless columns.include?('agency_id')
+          yield :add_agency_id_to_audits
+        end
       end
     end
   end
