@@ -17,8 +17,9 @@ module Audited
     belongs_to :auditable,  polymorphic: true
     belongs_to :user,       polymorphic: true
     belongs_to :associated, polymorphic: true
+    belongs_to :agency
 
-    before_create :set_version_number, :set_audit_user, :set_request_uuid
+    before_create :set_version_number, :set_audit_user, :set_audit_agency, :set_request_uuid
 
     cattr_accessor :audited_class_names
     self.audited_class_names = Set.new
@@ -150,6 +151,11 @@ module Audited
 
     def set_audit_user
       self.user = Thread.current[:audited_user] if Thread.current[:audited_user]
+      nil # prevent stopping callback chains
+    end
+
+    def set_audit_agency
+      self.agency = Thread.current[:audited_agency] if Thread.current[:audited_agency]
       nil # prevent stopping callback chains
     end
 

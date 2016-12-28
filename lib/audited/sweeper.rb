@@ -22,6 +22,10 @@ module Audited
       controller.send(Audited.current_user_method) if controller.respond_to?(Audited.current_user_method, true)
     end
 
+    def current_agency
+      controller.send(Audited.current_agency_method) if controller.respond_to?(Audited.current_agency_method, true)
+    end
+
     def request_uuid
       controller.try(:request).try(:uuid)
     end
