@@ -3,7 +3,7 @@ require 'active_record'
 
 module Audited
   class << self
-    attr_accessor :ignored_attributes, :current_user_method
+    attr_accessor :ignored_attributes, :current_user_method, :current_agency_method
 
     # Deprecate audit_class accessors in preperation of their removal
     def audit_class

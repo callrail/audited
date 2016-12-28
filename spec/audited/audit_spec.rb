@@ -1,7 +1,8 @@
 require "spec_helper"
 
 describe Audited::Audit do
-  let(:user) { Models::ActiveRecord::User.new name: "Testing" }
+  let(:user)   { Models::ActiveRecord::User.new name: "Testing" }
+  let(:agency) { Models::ActiveRecord::Agency.new name: "Test Agency" }
 
   describe "user=" do
 
@@ -41,6 +42,21 @@ describe Audited::Audit do
       expect(subject.username).to be_nil
     end
 
+  end
+
+  describe "agency=" do
+    it "should be able to set the agency to a model object" do
+      subject.agency = agency
+      expect(subject.agency).to eq(agency)
+    end
+
+    it "should be able to set the agency to nil" do
+      subject.agency_id = 1
+      subject.agency = nil
+
+      expect(subject.agency).to be_nil
+      expect(subject.agency_id).to be_nil
+    end
   end
 
   describe "revision" do

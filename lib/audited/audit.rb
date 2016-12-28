@@ -5,6 +5,7 @@ module Audited
   #
   # * <tt>auditable</tt>: the ActiveRecord model that was changed
   # * <tt>user</tt>: the user that performed the change; a string or an ActiveRecord model
+  # * <tt>agency</tt>: the agency that owns the audited object; an ActiveRecord model
   # * <tt>action</tt>: one of create, update, or delete
   # * <tt>audited_changes</tt>: a serialized hash of all the changes
   # * <tt>comment</tt>: a comment set with the audit
@@ -17,7 +18,7 @@ module Audited
     belongs_to :auditable,  polymorphic: true
     belongs_to :user,       polymorphic: true
     belongs_to :associated, polymorphic: true
-    belongs_to :agency
+    belongs_to :agency,     polymorphic: true
 
     before_create :set_version_number, :set_audit_user, :set_audit_agency, :set_request_uuid
 

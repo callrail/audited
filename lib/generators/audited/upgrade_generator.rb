@@ -53,7 +53,7 @@ module Audited
         end
 
         unless columns.include?('agency_id')
-          yield :add_agency_id_to_audits
+          yield :add_agency_to_audits
         end
       end
     end
