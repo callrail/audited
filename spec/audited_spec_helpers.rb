@@ -8,6 +8,10 @@ module AuditedSpecHelpers
     Models::ActiveRecord::User.new({name: 'darth', username: 'darth', password: 'noooooooo'}.merge(attrs))
   end
 
+  def create_agency(attrs = {})
+    Models::ActiveRecord::Agency.create({name: 'Test Agency'}.merge(attrs))
+  end
+
   def create_versions(n = 2, attrs = {})
     Models::ActiveRecord::User.create(name: 'Foobar 1', **attrs).tap do |u|
       (n - 1).times do |i|

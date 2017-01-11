@@ -18,6 +18,7 @@ class AuditsController < ActionController::Base
   private
 
   attr_accessor :current_user
+  attr_accessor :current_agency
   attr_accessor :custom_user
 
   def populate_user; end
@@ -29,9 +30,11 @@ describe AuditsController do
 
   before(:each) do
     Audited.current_user_method = :current_user
+    Audited.current_agency_method = :current_agency
   end
 
   let(:user) { create_user }
+  let(:agency) { create_agency }
 
   describe "POST audit" do
 
@@ -42,6 +45,15 @@ describe AuditsController do
       }.to change( Audited::Audit, :count )
 
       expect(controller.company.audits.last.user).to eq(user)
+    end
+
+    it "should audit agency" do
+      controller.send(:current_agency=, agency)
+      expect {
+        post :create
+      }.to change( Audited::Audit, :count )
+
+      expect(controller.company.audits.last.agency).to eq(agency)
     end
 
     it "should support custom users for sweepers" do
