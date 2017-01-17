@@ -2,7 +2,7 @@ require 'active_record'
 
 module Audited
   class << self
-    attr_accessor :ignored_attributes, :current_user_method, :max_audits, :auditing_enabled, :current_agency_method
+    attr_accessor :ignored_attributes, :current_user_method, :max_audits, :auditing_enabled, :current_parent_method
     attr_writer :audit_class
 
     def audit_class
@@ -22,7 +22,7 @@ module Audited
 
   @current_user_method = :current_user
   @auditing_enabled = true
-  @current_agency_method = :current_agency
+  @current_parent_method = :current_parent
 end
 
 require 'audited/auditor'

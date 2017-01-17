@@ -63,8 +63,8 @@ module Audited
           yield :add_version_to_auditable_index
         end
 
-        unless columns.include?('agency_id')
-          yield :add_agency_to_audits
+        unless columns.include?('parent_id')
+          yield :add_parent_to_audits
         end
       end
     end

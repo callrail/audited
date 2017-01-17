@@ -8,8 +8,8 @@ module AuditedSpecHelpers
     Models::ActiveRecord::User.new({name: 'darth', username: 'darth', password: 'noooooooo'}.merge(attrs))
   end
 
-  def create_agency(attrs = {})
-    Models::ActiveRecord::Agency.create({name: 'Test Agency'}.merge(attrs))
+  def create_parent(attrs = {})
+    Models::ActiveRecord::Parent.create({name: 'Test Parent'}.merge(attrs))
   end
 
   def create_versions(n = 2, attrs = {})

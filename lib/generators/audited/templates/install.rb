@@ -7,8 +7,8 @@ class <%= migration_class_name %> < <%= migration_parent %>
       t.column :associated_type, :string
       t.column :user_id, :<%= options[:audited_user_id_column_type] %>
       t.column :user_type, :string
-      t.column :agency_id, :integer
-      t.column :agency_type, :string
+      t.column :parent_id, :integer
+      t.column :parent_type, :string
       t.column :username, :string
       t.column :action, :string
       t.column :audited_changes, :<%= options[:audited_changes_column_type] %>
@@ -22,7 +22,7 @@ class <%= migration_class_name %> < <%= migration_parent %>
     add_index :audits, [:auditable_type, :auditable_id, :version], :name => 'auditable_index'
     add_index :audits, [:associated_type, :associated_id], :name => 'associated_index'
     add_index :audits, [:user_id, :user_type], :name => 'user_index'
-    add_index :audits, [:agency_id, :agency_type], :name => 'agency_index'
+    add_index :audits, [:parent_id, :parent_type], :name => 'parent_index'
     add_index :audits, :request_uuid
     add_index :audits, :created_at
   end
