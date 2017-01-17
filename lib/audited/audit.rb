@@ -5,7 +5,7 @@ module Audited
   #
   # * <tt>auditable</tt>: the ActiveRecord model that was changed
   # * <tt>user</tt>: the user that performed the change; a string or an ActiveRecord model
-  # * <tt>agency</tt>: the agency that owns the audited object; an ActiveRecord model
+  # * <tt>parent</tt>: the parent that owns the audited object; an ActiveRecord model
   # * <tt>action</tt>: one of create, update, or delete
   # * <tt>audited_changes</tt>: a hash of all the changes
   # * <tt>comment</tt>: a comment set with the audit
@@ -37,9 +37,9 @@ module Audited
     belongs_to :auditable,  polymorphic: true
     belongs_to :user,       polymorphic: true
     belongs_to :associated, polymorphic: true
-    belongs_to :agency,     polymorphic: true
+    belongs_to :parent,     polymorphic: true
 
-    before_create :set_version_number, :set_audit_user, :set_audit_agency, :set_request_uuid, :set_remote_address
+    before_create :set_version_number, :set_audit_user, :set_audit_parent, :set_request_uuid, :set_remote_address
 
     cattr_accessor :audited_class_names
     self.audited_class_names = Set.new
@@ -180,8 +180,8 @@ module Audited
       nil # prevent stopping callback chains
     end
 
-    def set_audit_agency
-      self.agency = Thread.current[:audited_agency] if Thread.current[:audited_agency]
+    def set_audit_parent
+      self.parent = Thread.current[:audited_parent] if Thread.current[:audited_parent]
       nil # prevent stopping callback chains
     end
 

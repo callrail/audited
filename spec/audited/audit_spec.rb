@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Audited::Audit do
   let(:user)   { Models::ActiveRecord::User.new name: "Testing" }
-  let(:agency) { Models::ActiveRecord::Agency.new name: "Test Agency" }
+  let(:parent) { Models::ActiveRecord::Parent.new name: "Test Parent" }
 
   describe "audit class" do
     around(:example) do |example|
@@ -92,18 +92,18 @@ describe Audited::Audit do
 
   end
 
-  describe "agency=" do
-    it "should be able to set the agency to a model object" do
-      subject.agency = agency
-      expect(subject.agency).to eq(agency)
+  describe "parent=" do
+    it "should be able to set the parent to a model object" do
+      subject.parent = parent
+      expect(subject.parent).to eq(parent)
     end
 
-    it "should be able to set the agency to nil" do
-      subject.agency_id = 1
-      subject.agency = nil
+    it "should be able to set the parent to nil" do
+      subject.parent_id = 1
+      subject.parent = nil
 
-      expect(subject.agency).to be_nil
-      expect(subject.agency_id).to be_nil
+      expect(subject.parent).to be_nil
+      expect(subject.parent_id).to be_nil
     end
   end
 
