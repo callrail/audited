@@ -14,7 +14,7 @@ module Audited
 
     def before_create(audit)
       audit.user ||= current_user
-      audit.agency ||= current_agency
+      audit.parent ||= current_parent
       audit.remote_address = controller.try(:request).try(:remote_ip)
       audit.request_uuid = request_uuid if request_uuid
     end
@@ -23,8 +23,8 @@ module Audited
       controller.send(Audited.current_user_method) if controller.respond_to?(Audited.current_user_method, true)
     end
 
-    def current_agency
-      controller.send(Audited.current_agency_method) if controller.respond_to?(Audited.current_agency_method, true)
+    def current_parent
+      controller.send(Audited.current_parent_method) if controller.respond_to?(Audited.current_parent_method, true)
     end
 
     def request_uuid

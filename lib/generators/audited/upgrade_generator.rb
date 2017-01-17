@@ -52,8 +52,8 @@ module Audited
           yield :rename_association_to_associated
         end
 
-        unless columns.include?('agency_id')
-          yield :add_agency_to_audits
+        unless columns.include?('parent_id')
+          yield :add_parent_to_audits
         end
       end
     end

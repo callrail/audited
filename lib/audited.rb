@@ -3,7 +3,7 @@ require 'active_record'
 
 module Audited
   class << self
-    attr_accessor :ignored_attributes, :current_user_method, :current_agency_method
+    attr_accessor :ignored_attributes, :current_user_method, :current_parent_method
 
     # Deprecate audit_class accessors in preperation of their removal
     def audit_class
@@ -19,7 +19,7 @@ module Audited
   @ignored_attributes = %w(lock_version created_at updated_at created_on updated_on)
 
   @current_user_method = :current_user
-  @current_agency_method = :current_agency
+  @current_parent_method = :current_parent
 end
 
 require 'audited/auditor'

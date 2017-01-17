@@ -13,7 +13,7 @@ module Models
       end
     end
 
-    class Agency < ::ActiveRecord::Base
+    class Parent < ::ActiveRecord::Base
       audited allow_mass_assignment: true
 
       def name=(val)
