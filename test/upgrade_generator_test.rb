@@ -74,4 +74,16 @@ class UpgradeGeneratorTest < Rails::Generators::TestCase
       assert_match(/add_index :audits, :request_uuid/, content)
     end
   end
+
+  test "should add 'parent_id' and 'parent_type' to audits table" do
+    load_schema 7
+
+    run_generator %w(upgrade)
+
+    assert_migration "db/migrate/add_parent_to_audits.rb" do |content|
+      assert_match(/add_column :audits, :parent_id, :integer/, content)
+      assert_match(/add_column :audits, :parent_type, :string/, content)
+      assert_match(/add_index :audits, \[:parent_id, :parent_type\], :name => 'parent_index'/, content)
+    end
+  end
 end

@@ -1,7 +1,8 @@
 require "spec_helper"
 
 describe Audited::Audit do
-  let(:user) { Models::ActiveRecord::User.new name: "Testing" }
+  let(:user)   { Models::ActiveRecord::User.new name: "Testing" }
+  let(:parent) { Models::ActiveRecord::Parent.new name: "Test Parent" }
 
   describe "user=" do
 
@@ -41,6 +42,21 @@ describe Audited::Audit do
       expect(subject.username).to be_nil
     end
 
+  end
+
+  describe "parent=" do
+    it "should be able to set the parent to a model object" do
+      subject.parent = parent
+      expect(subject.parent).to eq(parent)
+    end
+
+    it "should be able to set the parent to nil" do
+      subject.parent_id = 1
+      subject.parent = nil
+
+      expect(subject.parent).to be_nil
+      expect(subject.parent_id).to be_nil
+    end
   end
 
   describe "revision" do

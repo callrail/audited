@@ -13,6 +13,14 @@ module Models
       end
     end
 
+    class Parent < ::ActiveRecord::Base
+      audited allow_mass_assignment: true
+
+      def name=(val)
+        write_attribute(:name, CGI.escapeHTML(val))
+      end
+    end
+
     class UserOnlyPassword < ::ActiveRecord::Base
       self.table_name = :users
       audited allow_mass_assignment: true, only: :password

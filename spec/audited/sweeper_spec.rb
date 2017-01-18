@@ -16,6 +16,7 @@ class AuditsController < ActionController::Base
   private
 
   attr_accessor :current_user
+  attr_accessor :current_parent
   attr_accessor :custom_user
 end
 
@@ -25,9 +26,11 @@ describe AuditsController do
 
   before(:each) do
     Audited.current_user_method = :current_user
+    Audited.current_parent_method = :current_parent
   end
 
   let(:user) { create_user }
+  let(:parent) { create_parent }
 
   describe "POST audit" do
 
@@ -38,6 +41,15 @@ describe AuditsController do
       }.to change( Audited::Audit, :count )
 
       expect(controller.company.audits.last.user).to eq(user)
+    end
+
+    it "should audit parent" do
+      controller.send(:current_parent=, parent)
+      expect {
+        post :create
+      }.to change( Audited::Audit, :count )
+
+      expect(controller.company.audits.last.parent).to eq(parent)
     end
 
     it "should support custom users for sweepers" do

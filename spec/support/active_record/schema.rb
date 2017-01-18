@@ -41,6 +41,10 @@ ActiveRecord::Schema.define do
     t.column :updated_at, :datetime
   end
 
+  create_table :parents do |t|
+    t.column :name, :string
+  end
+
   create_table :companies do |t|
     t.column :name, :string
     t.column :owner_id, :integer
@@ -63,6 +67,8 @@ ActiveRecord::Schema.define do
     t.column :associated_type, :string
     t.column :user_id, :integer
     t.column :user_type, :string
+    t.column :parent_id, :integer
+    t.column :parent_type, :string
     t.column :username, :string
     t.column :action, :string
     t.column :audited_changes, :text
@@ -76,6 +82,7 @@ ActiveRecord::Schema.define do
   add_index :audits, [:auditable_id, :auditable_type], name: 'auditable_index'
   add_index :audits, [:associated_id, :associated_type], name: 'associated_index'
   add_index :audits, [:user_id, :user_type], name: 'user_index'
+  add_index :audits, [:parent_id, :parent_type], name: 'parent_index'
   add_index :audits, :request_uuid
   add_index :audits, :created_at
 end
